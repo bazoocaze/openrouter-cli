@@ -35,7 +35,7 @@ OpenRouter CLI provides a straightforward way to interact with various AI models
 5. Optional: Create a symbolic link: `sudo ln -s $(pwd)/openrouter_cli.sh /usr/local/bin/openrouter`
 6. Optional: Enable autocomplete by adding to your shell profile:
    ```bash
-   source /path/to/.openrouter_autocomplete.sh
+   source /path/to/openrouter_autocomplete.sh
    ```
 
 ## Usage
