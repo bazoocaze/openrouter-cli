@@ -4,7 +4,7 @@ A simple, lightweight command-line interface for interacting with OpenRouter AI 
 
 ![OpenRouter CLI](https://img.shields.io/badge/OpenRouter-CLI-blue)
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-green)
-![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-yellow)
+![License MIT](https://img.shields.io/badge/License-MIT-yellow)
 
 ## Overview
 
@@ -84,4 +84,4 @@ Contributions are welcome! Feel free to submit issues or pull requests.
 
 ## License
 
-This project is licensed under the Apache License, Version 2.0 - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
