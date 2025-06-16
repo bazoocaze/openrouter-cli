@@ -1,11 +1,11 @@
 # bash autocompletion for openrouter-cli
 refresh_openrouter_model_cache_if_needed() {
     local CACHE_FILE="$HOME/.cache/openrouter_models.txt"
-    local CACHE_DURATION=86400  # 24 horas
+    local CACHE_DURATION=86400  # 24 hours
     if [[ ! -f "$CACHE_FILE" || $(( $(date +%s) - $(stat -c %Y "$CACHE_FILE") )) -gt $CACHE_DURATION ]]; then
         mkdir -p "$(dirname \"$CACHE_FILE\")"
         if command -v openrouter &> /dev/null; then
-            openrouter list-models 2>/dev/null | cut -d' ' -f 1 | grep '/' > "$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
+            openrouter list-models-json 2>/dev/null | jq -r '.[].id' > "$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
         else
             echo "[failed:P1]"
         fi
@@ -16,7 +16,7 @@ _openrouter_cli_autocomplete() {
     local cur prev words cword
     _init_completion || return
 
-    local subcommands="chat list-models"
+    local subcommands="chat list-models list-models-json"
     local opts="--model -m --stream --no-stream --no-reasoning --save"
     local CACHE_FILE="$HOME/.cache/openrouter_models.txt"
 
