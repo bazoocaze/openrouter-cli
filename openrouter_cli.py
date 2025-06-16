@@ -5,12 +5,10 @@ import sys
 
 import requests
 
-
 # ========= Config =========
 
 def get_api_key():
     return os.getenv("OPENROUTER_API_KEY")
-
 
 HEADERS = {
     "Authorization": f"Bearer {get_api_key()}",
@@ -21,7 +19,6 @@ HEADERS = {
 
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 HISTORY_FILE = "history.jsonl"
-
 
 # ========= API Calls =========
 
@@ -35,13 +32,11 @@ def send_chat(model, messages, stream=False):
     response.raise_for_status()
     return response
 
-
 def list_models():
     url = "https://openrouter.ai/api/v1/models"
     r = requests.get(url, headers=HEADERS)
     r.raise_for_status()
     return r.json().get("data", [])
-
 
 # ========= Util =========
 
@@ -72,14 +67,12 @@ def print_stream(response, hide_reasoning=False):
         sys.stdout.write("</think>")
     sys.stdout.write("\n")
 
-
 def save_to_history(messages):
     try:
         with open(HISTORY_FILE, "a") as f:
             f.write(json.dumps(messages) + "\n")
     except Exception:
         pass
-
 
 # ========= CLI Logic =========
 
@@ -107,13 +100,17 @@ def run_chat(args):
 
     return 0
 
-
 def run_list(args):
     models = list_models()
     for m in models:
         print(f"{m['id']:50} {m.get('description', '')}")
     return 0
 
+def run_list_json(args):
+    models = list_models()
+    json.dump(models, sys.stdout)
+    print()  # Add a newline at the end
+    return 0
 
 def main():
     parser = argparse.ArgumentParser(description="OpenRouter CLI")
@@ -134,6 +131,10 @@ def main():
     list_parser = subparsers.add_parser("list-models", help="List available models")
     list_parser.set_defaults(func=run_list)
 
+    # list-models-json
+    list_json_parser = subparsers.add_parser("list-models-json", help="List available models in JSON format")
+    list_json_parser.set_defaults(func=run_list_json)
+
     args = parser.parse_args()
     if hasattr(args, "func"):
         try:
@@ -147,7 +148,6 @@ def main():
     else:
         parser.print_help()
         return 1
-
 
 if __name__ == "__main__":
     sys.exit(main())
