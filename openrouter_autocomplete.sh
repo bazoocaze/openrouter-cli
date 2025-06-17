@@ -1,13 +1,11 @@
 # bash autocompletion for openrouter-cli
-refresh_openrouter_model_cache_if_needed() {
+_refresh_openrouter_model_cache_if_needed() {
     local CACHE_FILE="$HOME/.cache/openrouter_models.txt"
     local CACHE_DURATION=86400  # 24 hours
     if [[ ! -f "$CACHE_FILE" || $(( $(date +%s) - $(stat -c %Y "$CACHE_FILE") )) -gt $CACHE_DURATION ]]; then
         mkdir -p "$(dirname \"$CACHE_FILE\")"
-        if command -v openrouter &> /dev/null; then
-            openrouter list-models-json 2>/dev/null | jq -r '.[].id' > "$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
-        else
-            echo "[failed:P1]"
+        if command -v openrouter_cli &> /dev/null; then
+            openrouter_cli list-models-json 2>/dev/null | jq -r '.[].id' > "$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
         fi
     fi
 }
@@ -28,7 +26,7 @@ _openrouter_cli_autocomplete() {
     case ${words[1]} in
         chat)
             if [[ $prev == "--model" || $prev == "-m" ]]; then
-                refresh_openrouter_model_cache_if_needed
+                _refresh_openrouter_model_cache_if_needed
                 if [[ -f "$CACHE_FILE" ]]; then
                     mapfile -t models < "$CACHE_FILE"
                     COMPREPLY=( $(compgen -W "${models[*]}" -- "$cur") )
@@ -42,5 +40,5 @@ _openrouter_cli_autocomplete() {
     esac
 }
 
-complete -F _openrouter_cli_autocomplete openrouter
+complete -F _openrouter_cli_autocomplete openrouter_cli
 

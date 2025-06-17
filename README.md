@@ -32,7 +32,7 @@ OpenRouter CLI provides a straightforward way to interact with various AI models
 2. Install dependencies with `pipenv install`
 3. Set your API key: `export OPENROUTER_API_KEY="your_api_key_here"`
 4. Make the script executable: `chmod +x openrouter_cli.sh`
-5. Optional: Create a symbolic link: `sudo ln -s $(pwd)/openrouter_cli.sh /usr/local/bin/openrouter`
+5. Optional: Create a symbolic link: `sudo ln -s $(pwd)/openrouter_cli.sh /usr/local/bin/openrouter_cli`
 6. Optional: Enable autocomplete by adding to your shell profile:
    ```bash
    source /path/to/openrouter_autocomplete.sh
