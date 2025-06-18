@@ -112,6 +112,12 @@ def run_list_json(args):
     print()  # Add a newline at the end
     return 0
 
+def run_list_ids(args):
+    models = list_models()
+    for m in models:
+        print(m["id"])
+    return 0
+
 def main():
     parser = argparse.ArgumentParser(description="OpenRouter CLI")
     subparsers = parser.add_subparsers()
@@ -134,6 +140,10 @@ def main():
     # list-models-json
     list_json_parser = subparsers.add_parser("list-models-json", help="List available models in JSON format")
     list_json_parser.set_defaults(func=run_list_json)
+
+    # list-models-ids
+    list_ids_parser = subparsers.add_parser("list-models-ids", help="List only the IDs of available models")
+    list_ids_parser.set_defaults(func=run_list_ids)
 
     args = parser.parse_args()
     if hasattr(args, "func"):
