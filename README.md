@@ -44,19 +44,19 @@ OpenRouter CLI provides a straightforward way to interact with various AI models
 
 ```bash
 # Chat with default model (qwen/qwen3-14b:free)
-openrouter chat "What's the weather like on Mars?"
+openrouter_cli chat "What's the weather like on Mars?"
 
 # Use a specific model
-openrouter chat "Explain quantum computing in simple terms" --model anthropic/claude-3-haiku
+openrouter_cli chat "Explain quantum computing in simple terms" --model anthropic/claude-3-haiku
 
 # List all available models
-openrouter list-models
+openrouter_cli list-models
 
 # List models as JSON
-openrouter list-models-json
+openrouter_cli list-models-json
 
 # List only model IDs
-openrouter list-models-ids
+openrouter_cli list-models-ids
 ```
 
 ### Chat Options
@@ -71,13 +71,13 @@ openrouter list-models-ids
 
 ```bash
 # Generate a creative piece
-openrouter chat "Write a haiku about programming"
+openrouter_cli chat "Write a haiku about programming"
 
 # Hide the reasoning process
-openrouter chat "Explain relativity simply" --no-reasoning
+openrouter_cli chat "Explain relativity simply" --no-reasoning
 
 # Save conversation to history
-openrouter chat "What are the best practices for API design?" --save
+openrouter_cli chat "What are the best practices for API design?" --save
 ```
 
 ## About OpenRouter
