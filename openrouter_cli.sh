@@ -1,13 +1,19 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
-ENTRYPOINT="${SCRIPT_DIR}/openrouter_cli.py"
+SCRIPT_NAME="$(basename "$(realpath "$0")")"
+ENTRYPOINT="${SCRIPT_DIR}/${SCRIPT_NAME%.sh}.py"
 VENV_FILE="${SCRIPT_DIR}/.venv_path"
-[ -f "${SCRIPT_DIR}/.env" ] && source "${SCRIPT_DIR}/.env"
-if [ ! -f "${VENV_FILE}" ] ; then
+
+# Load and export all vars from .env if it exists
+[ -f "${SCRIPT_DIR}/.env" ] && set -a && source "${SCRIPT_DIR}/.env" && set +a
+
+# Generate or validate venv path cache
+if [ ! -f "${VENV_FILE}" ] || [ ! -x "$(cat "${VENV_FILE}")/bin/python" ]; then
   export PIPENV_PIPFILE="${SCRIPT_DIR}/Pipfile"
   pipenv -q --venv > "${VENV_FILE}"
 fi
+
 VENV_PATH=$(<"${VENV_FILE}")
-[ ! -f "${VENV_PATH}/bin/python" ] && rm -f "${VENV_FILE}"
-export OPENROUTER_API_KEY
+
+# Run the script using the venv's Python interpreter
 exec "${VENV_PATH}/bin/python" "$ENTRYPOINT" "$@"
