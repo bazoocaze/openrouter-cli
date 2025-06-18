@@ -14,7 +14,7 @@ _openrouter_cli_autocomplete() {
     local cur prev words cword
     _init_completion || return
 
-    local subcommands="chat list-models list-models-json"
+    local subcommands="chat list-models list-models-json list-models-ids"
     local opts="--model -m --stream --no-stream --no-reasoning --save"
     local CACHE_FILE="$HOME/.cache/openrouter_models.txt"
 
