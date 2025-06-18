@@ -13,8 +13,8 @@ def get_api_key():
 HEADERS = {
     "Authorization": f"Bearer {get_api_key()}",
     "Content-Type": "application/json",
-    "HTTP-Referer": "http://localhost",
-    "X-Title": "openrouter-cli"
+    "HTTP-Referer": "https://github.com/bazoocaze/openrouter-cli",
+    "X-Title": "OpenRouter CLI"
 }
 
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
