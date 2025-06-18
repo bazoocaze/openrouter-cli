@@ -51,11 +51,17 @@ openrouter chat "Explain quantum computing in simple terms" --model anthropic/cl
 
 # List all available models
 openrouter list-models
+
+# List models as JSON
+openrouter list-models-json
+
+# List only model IDs
+openrouter list-models-ids
 ```
 
 ### Chat Options
 
-- `-m, --model MODEL`: Specify which model to use
+- `-m, --model MODEL`: Specify which model to use (default: qwen/qwen3-14b:free)
 - `--stream`: Enable streaming responses (default)
 - `--no-stream`: Disable streaming responses
 - `--no-reasoning`: Hide the model's reasoning section
