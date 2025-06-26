@@ -67,7 +67,7 @@ openrouter_cli list-models-ids
 - `--no-reasoning`: Hide the model's reasoning section
 - `--save`: Save conversation to local history
 
-## Examples
+### Examples
 
 ```bash
 # Generate a creative piece
@@ -78,7 +78,14 @@ openrouter_cli chat "Explain relativity simply" --no-reasoning
 
 # Save conversation to history
 openrouter_cli chat "What are the best practices for API design?" --save
+
+# Read prompt from stdin if no prompt is provided
+echo "What's the weather like on Mars?" | openrouter_cli chat
 ```
+
+### Notes
+
+- If no prompt is provided, the CLI will read the prompt from stdin.
 
 ## About OpenRouter
 
