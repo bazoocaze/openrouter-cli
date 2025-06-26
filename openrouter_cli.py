@@ -77,6 +77,9 @@ def save_to_history(messages):
 # ========= CLI Logic =========
 
 def run_chat(args):
+    if args.prompt is None:
+        args.prompt = sys.stdin.read().strip()
+
     messages = [{"role": "user", "content": args.prompt}]
     response = send_chat(args.model, messages, args.stream)
 
@@ -124,7 +127,7 @@ def main():
 
     # chat
     chat_parser = subparsers.add_parser("chat", help="Send a message to the model")
-    chat_parser.add_argument("prompt", help="User message")
+    chat_parser.add_argument("prompt", nargs='?', help="User message")
     chat_parser.add_argument("-m", "--model", default="qwen/qwen3-14b:free", help="Model to use (default qwen/qwen3-14b:free)")
     chat_parser.add_argument("--stream", dest="stream", action="store_true", help="Use stream (default)")
     chat_parser.add_argument("--no-stream", dest="stream", action="store_false", help="Disable stream")
