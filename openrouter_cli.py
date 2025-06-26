@@ -42,6 +42,8 @@ def list_models():
 
 def print_stream(response, hide_reasoning=False):
     thinking = False
+    content = ""
+    reasoning = ""
     for line in response.iter_lines():
         if line:
             try:
@@ -54,6 +56,7 @@ def print_stream(response, hide_reasoning=False):
                         thinking = True
                     sys.stdout.write(delta["reasoning"])
                     sys.stdout.flush()
+                    reasoning += delta["reasoning"]
 
                 if len(delta.get("content", "")) > 0:
                     if thinking:
@@ -61,11 +64,13 @@ def print_stream(response, hide_reasoning=False):
                         thinking = False
                     sys.stdout.write(delta["content"])
                     sys.stdout.flush()
+                    content += delta["content"]
             except Exception:
                 continue
     if thinking:
         sys.stdout.write("</think>")
     sys.stdout.write("\n")
+    return content, reasoning
 
 def save_to_history(messages):
     try:
@@ -84,11 +89,7 @@ def run_chat(args):
     response = send_chat(args.model, messages, args.stream)
 
     if args.stream:
-        print_stream(response, hide_reasoning=args.no_reasoning)
-        data = response.json()
-        msg = data["choices"][0]["message"]
-        content = msg.get("content", "")
-        reasoning = msg.get("reasoning", "")
+        content, reasoning = print_stream(response, hide_reasoning=args.no_reasoning)
 
         if not args.no_reasoning and reasoning:
             print("<think>")
