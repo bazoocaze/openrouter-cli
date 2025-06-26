@@ -85,6 +85,21 @@ def run_chat(args):
 
     if args.stream:
         print_stream(response, hide_reasoning=args.no_reasoning)
+        data = response.json()
+        msg = data["choices"][0]["message"]
+        content = msg.get("content", "")
+        reasoning = msg.get("reasoning", "")
+
+        if not args.no_reasoning and reasoning:
+            print("<think>")
+            print(reasoning.strip())
+            print("</think>\n\n")
+
+        print(content.strip())
+
+        if args.save:
+            messages.append({"role": "assistant", "content": content, "reasoning": reasoning})
+            save_to_history(messages)
     else:
         data = response.json()
         msg = data["choices"][0]["message"]
@@ -98,8 +113,9 @@ def run_chat(args):
 
         print(content.strip())
 
-    if args.save:
-        save_to_history(messages)
+        if args.save:
+            messages.append({"role": "assistant", "content": content, "reasoning": reasoning})
+            save_to_history(messages)
 
     return 0
 
