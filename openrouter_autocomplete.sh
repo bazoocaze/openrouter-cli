@@ -11,6 +11,7 @@ _refresh_openrouter_model_cache_if_needed() {
 }
 
 _openrouter_cli_autocomplete() {
+    COMP_WORDBREAKS=${COMP_WORDBREAKS//:/}
     local cur prev words cword
     _init_completion || return
 

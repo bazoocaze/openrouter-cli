@@ -65,7 +65,7 @@ openrouter_cli list-models-ids
 - `--stream`: Enable streaming responses (default)
 - `--no-stream`: Disable streaming responses
 - `--no-reasoning`: Hide the model's reasoning section
-- `--save`: Save conversation to local history
+- `--save`: Save/append conversation to local history (history.jsonl)
 
 ### Examples
 
@@ -76,7 +76,7 @@ openrouter_cli chat "Write a haiku about programming"
 # Hide the reasoning process
 openrouter_cli chat "Explain relativity simply" --no-reasoning
 
-# Save conversation to history
+# Save conversation history to file history.jsonl
 openrouter_cli chat "What are the best practices for API design?" --save
 
 # Read prompt from stdin if no prompt is provided
